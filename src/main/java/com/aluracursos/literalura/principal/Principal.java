@@ -1,6 +1,7 @@
 package com.aluracursos.literalura.principal;
 
 import com.aluracursos.literalura.model.DatosLibro;
+import com.aluracursos.literalura.model.Libro;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
 
@@ -18,6 +19,8 @@ public class Principal {
         var json = consumoAPI.obtenerDatos(URL + "?search=" + nombreLibro.replace(" ","%20"));
         System.out.println(json);
         var datosLibro = conversor.obtenerDatos(json, DatosLibro.class);
-        System.out.println(datosLibro);
+
+        Libro libro = new Libro(datosLibro);
+        System.out.println(libro.toString());
     }
 }
