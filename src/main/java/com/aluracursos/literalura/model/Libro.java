@@ -10,23 +10,23 @@ public class Libro {
     private String idioma;
     private Integer descargas;
 
-    public Libro(DatosLibro datosLibro) {
-        this.titulo = datosLibro.titulo();
-        this.autor = datosLibro.autor().get(0).nombre();
-        this.annoNacimiento = datosLibro.autor().get(0).annoNacimiento();
-        this.annoFallecido = datosLibro.autor().get(0).annoFallecido();
+    public Libro(DatosCatalogo datosCatalogo) {
+        this.titulo = datosCatalogo.resultados().get(0).titulo();
+        this.autor = datosCatalogo.resultados().get(0).autor().get(0).nombre();
+        this.annoNacimiento = datosCatalogo.resultados().get(0).autor().get(0).annoNacimiento();
+        this.annoFallecido = datosCatalogo.resultados().get(0).autor().get(0).annoFallecido();
         try {
-            this.tematica = datosLibro.tematica().get(0);
+            this.tematica = datosCatalogo.resultados().get(0).tematica().get(0);
         } catch (Exception e) {
-            this.tematica = "";
+            this.tematica = null;
         }
         try {
-            this.categoria = datosLibro.categoria().get(0);
+            this.categoria = datosCatalogo.resultados().get(0).categoria().get(0);
         } catch (Exception e) {
-            this.categoria = "";
+            this.categoria = null;
         }
-        this.idioma = datosLibro.idioma().get(0);
-        this.descargas = datosLibro.descargas();
+        this.idioma = datosCatalogo.resultados().get(0).idioma().get(0);
+        this.descargas = datosCatalogo.resultados().get(0).descargas();
     }
 
     @Override

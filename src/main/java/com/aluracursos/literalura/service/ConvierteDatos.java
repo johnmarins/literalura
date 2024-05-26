@@ -10,11 +10,11 @@ public class ConvierteDatos implements IConvierteDatos{
     @Override
     public <T> T obtenerDatos(String json, Class<T> clase) {
         try {
-            JsonNode jsonNode = mapper.readTree(json);
-            JsonNode primerElemento = jsonNode.get("results").get(0);
-            String primerJson = primerElemento.toPrettyString();
-
-            return mapper.readValue(primerJson, clase);
+//            JsonNode jsonNode = mapper.readTree(json);
+//            JsonNode primerElemento = jsonNode.get("results").get(0);
+//            String primerJson = primerElemento.toPrettyString();
+//
+            return mapper.readValue(json, clase);
 
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
