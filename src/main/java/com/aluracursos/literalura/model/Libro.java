@@ -1,6 +1,14 @@
 package com.aluracursos.literalura.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "libros")
 public class Libro {
+    @jakarta.persistence.Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+    @Column(unique = true)
     private String titulo;
     private String autor;
     private Integer annoNacimiento;
@@ -10,9 +18,15 @@ public class Libro {
     private String idioma;
     private Integer descargas;
 
+
+
     public Libro(DatosCatalogo datosCatalogo) {
         this.titulo = datosCatalogo.resultados().get(0).titulo();
-        this.autor = datosCatalogo.resultados().get(0).autor().get(0).nombre();
+        try {
+            this.autor = datosCatalogo.resultados().get(0).autor().get(0).nombre();
+        } catch (Exception e) {
+            this.autor = null;
+        }
         this.annoNacimiento = datosCatalogo.resultados().get(0).autor().get(0).annoNacimiento();
         this.annoFallecido = datosCatalogo.resultados().get(0).autor().get(0).annoFallecido();
         try {
@@ -39,6 +53,14 @@ public class Libro {
                 ", Categoria : '" + categoria + '\'' +
                 ", Idioma : '" + idioma + '\'' +
                 ", Descargas : " + descargas;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     public String getTitulo() {

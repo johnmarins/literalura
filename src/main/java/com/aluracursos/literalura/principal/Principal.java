@@ -1,28 +1,33 @@
 package com.aluracursos.literalura.principal;
 
-import com.aluracursos.literalura.model.DatosLibro;
 import com.aluracursos.literalura.model.Libro;
 import com.aluracursos.literalura.model.DatosCatalogo;
+import com.aluracursos.literalura.repository.LibroRepository;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
 
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
-    private Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
     private final String URL = "https://gutendex.com/books/";
-    private ConsumoAPI consumoAPI = new ConsumoAPI();
-    private ConvierteDatos conversor = new ConvierteDatos();
+    private final ConsumoAPI consumoAPI = new ConsumoAPI();
+    private final ConvierteDatos conversor = new ConvierteDatos();
+
+    private final LibroRepository repository;
+    public Principal(LibroRepository repository) {
+        this.repository = repository;
+    }
 
     public void muestraElMenu(){
 
         var opcion = -1;
         var menu = """
                 1 - Buscar por palabras clave
-                2 - Buscar libros entre fechas
-                3 - Listar todos libros consultados
+                2 - Listar todos libros consultados
+                3 - Buscar libros entre fechas
                 4 - Listar libros por autor
                 5 - Listar libros por categoria
                 6 - Listar libros por idioma
@@ -39,9 +44,9 @@ public class Principal {
                     consultaPalabrasClave();
                     break;
                 case 2:
+                    listarLibrosConsultados();
                     break;
                 case 3:
-                    listarLibrosConsultados();
                     break;
                 case 0:
                     System.out.println("Cerrando la aplicación");
@@ -62,16 +67,15 @@ public class Principal {
         System.out.println(json);
 
         var resultados = conversor.obtenerDatos(json, DatosCatalogo.class);
+
         if (resultados.cantResultados()==0) {
             System.out.println();
+
             System.out.println("No hay resultados coincidentes");
             System.out.println();
         } else {
-
-            var datosLibro = conversor.obtenerDatos(json, DatosLibro.class);
-
             Libro libro = new Libro(resultados);
-            libroArrayList.add(libro);
+            repository.save(libro);
 
             System.out.printf("""
                 
@@ -83,7 +87,13 @@ public class Principal {
     }
 
     private void listarLibrosConsultados() {
-        libroArrayList.forEach(System.out::println);
-        System.out.println();
+        if (libroArrayList.isEmpty()){
+            System.out.println("No hay libros registrados hasta el momento");
+            System.out.println();
+        } else {
+            libroArrayList.forEach(System.out::println);
+            System.out.println();
+        }
+
     }
 }
