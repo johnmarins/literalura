@@ -18,10 +18,15 @@ public class Libro {
     private String idioma;
     private Integer descargas;
 
-
+    public Libro(){}
 
     public Libro(DatosCatalogo datosCatalogo) {
-        this.titulo = datosCatalogo.resultados().get(0).titulo();
+        try {
+            this.titulo = datosCatalogo.resultados().get(0).titulo().substring(0,254);
+        } catch (Exception e) {
+            this.titulo = datosCatalogo.resultados().get(0).titulo();
+        }
+
         try {
             this.autor = datosCatalogo.resultados().get(0).autor().get(0).nombre();
         } catch (Exception e) {
