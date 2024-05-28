@@ -85,7 +85,6 @@ public class Principal {
 
         if (resultados.cantResultados()==0) {
             System.out.println();
-
             System.out.println("No hay resultados coincidentes");
             System.out.println();
         } else {
@@ -98,6 +97,7 @@ public class Principal {
 
             System.out.printf("""
                 
+                Libro encontrado :
                 %s
                 
                 """, libro);
@@ -107,6 +107,8 @@ public class Principal {
 
     private void listarLibrosConsultados() {
         libros = repository.findAll();
+        System.out.println();
+        System.out.println("Libros consultados previamente :");
         libros.stream().sorted(Comparator.comparing(Libro::getId))
                 .forEach(System.out::println);
         System.out.println();
@@ -120,6 +122,7 @@ public class Principal {
         var anno_fallecimiento = sc.nextInt();
         sc.nextLine();
         List<Libro> filtroLibros =repository.librosPorFechaNacimientoFechaFallecimientoAutor(anno_nacimiento, anno_fallecimiento);
+        System.out.println();
         System.out.println("*** Libros filtrados ***");
         filtroLibros.forEach(System.out::println);
         System.out.println();
@@ -128,6 +131,8 @@ public class Principal {
     public void listarLibrosPorNombreAutor(){
         System.out.println("Escribe el nombre del autor");
         var nombreLibro =sc.nextLine();
+        System.out.println();
+        System.out.println("Libros del autor : ");
         List<Libro> librosEncontrados =repository.librosPorAutor(nombreLibro);
         librosEncontrados.forEach(System.out::println);
         System.out.println();
@@ -136,12 +141,16 @@ public class Principal {
     public void listarLibrosTitulo(){
         System.out.println("Escribe el nombre del libro");
         var nombreLibro =sc.nextLine();
+        System.out.println();
+        System.out.println("Libros con este titulo : ");
         List<Libro> librosEncontrados =repository.librosPorTitulo(nombreLibro);
         librosEncontrados.forEach(System.out::println);
         System.out.println();
     }
 
     public void listarTop5Descargas() {
+        System.out.println();
+        System.out.println("Libros con mayores descargas :");
         List<Libro> topDescargas = repository.findTop5ByOrderByDescargasDesc();
         topDescargas.forEach(System.out::println);
         System.out.println();
@@ -150,6 +159,8 @@ public class Principal {
     public void listarLibrosPorIdioma() {
         System.out.println("Escribe el idioma que quieres consultar");
         var idioma = sc.nextLine();
+        System.out.println();
+        System.out.println("Libros en este idioma :");
         List<Libro> librosPorIdioma = repository.librosPorIdioma(idioma);
         librosPorIdioma.forEach(System.out::println);
         System.out.println();
