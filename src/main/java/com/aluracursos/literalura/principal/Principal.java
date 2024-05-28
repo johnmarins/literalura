@@ -28,6 +28,7 @@ public class Principal {
 
         var opcion = -1;
         var menu = """
+                
                 1 - Buscar por palabras clave
                 2 - Listar todos libros consultados
                 3 - Buscar libros entre fechas de vida del autor
@@ -79,7 +80,6 @@ public class Principal {
         System.out.println("Escribe los terminos de búsqueda (Titulo y/o autor) : ");
         var nombreLibro = sc.nextLine();
         var json = consumoAPI.obtenerDatos(URL + "?search=" + nombreLibro.replace(" ","%20"));
-        System.out.println(json);
 
         var resultados = conversor.obtenerDatos(json, DatosCatalogo.class);
 
